@@ -21,13 +21,16 @@
     <ClInclude Include="Version_test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="1\Sales_item.h">
+    <ClInclude Include="Sales_item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="1\item_io.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="1\add_item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2\convert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

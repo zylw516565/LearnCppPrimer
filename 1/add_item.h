@@ -30,7 +30,7 @@
 #pragma once
 
 #include <iostream>
-#include "Sales_item.h"
+#include "../Sales_item.h"
 
 int add_item()
 {
