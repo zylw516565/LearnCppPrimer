@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClInclude Include="1\add_item.h" />
     <ClInclude Include="1\item_io.h" />
+    <ClInclude Include="3\aboutString.h" />
     <ClInclude Include="Sales_item.h" />
     <ClInclude Include="2\convert.h" />
     <ClInclude Include="src\VsTest.h" />
