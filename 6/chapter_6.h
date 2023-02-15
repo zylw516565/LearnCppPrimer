@@ -30,6 +30,11 @@ void err_msg(const initializer_list<string>& il)
     cout << endl;
 }
 
+void foo6(int n, ...)
+{
+    cout << "n = " << n << endl;
+}
+
 void chapter_6()
 {
     int i = 0, j[2] = {0, 1};
@@ -43,5 +48,7 @@ void chapter_6()
         err_msg({"functionX", expected, actual });
     else
         err_msg({"functionX", "ok"});
+
+    foo6(3);
 
 }
