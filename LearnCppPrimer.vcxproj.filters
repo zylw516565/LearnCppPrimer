@@ -36,6 +36,9 @@
     <ClInclude Include="3\aboutString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="6\chapter_6.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VsTest.cpp">
