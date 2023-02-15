@@ -6,7 +6,7 @@ int constexprVal = 1;
 
 void convert()
 {
-    bool b = 42;
+    bool b = static_cast<bool>(42);
     std::cout << "b = " << b << std::endl;
 
     int i = b;

@@ -35,6 +35,24 @@ void foo6(int n, ...)
     cout << "n = " << n << endl;
 }
 
+string &manip()
+{
+    string ret2("world !!!");
+    string ret;
+    ret.assign("hello");
+
+    if (!ret.empty())
+        return ret;   //错误, ret是一个局部临时量
+    else
+        return ret2;  //错误,"Empty"是一个局部临时量
+
+}
+
+char &get_val(string &str, string::size_type ix)
+{
+    return str[ix];
+}
+
 void chapter_6()
 {
     int i = 0, j[2] = {0, 1};
@@ -50,5 +68,8 @@ void chapter_6()
         err_msg({"functionX", "ok"});
 
     foo6(3);
+
+//     manip() = "nihao";
+//     cout << "manip(): " << manip() << endl;
 
 }
