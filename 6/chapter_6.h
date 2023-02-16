@@ -53,6 +53,36 @@ char &get_val(string &str, string::size_type ix)
     return str[ix];
 }
 
+//void overload_test(string str)
+//{
+//    cout << str << endl;
+//}
+//
+//void overload_test(const string str)
+//{
+//    cout << str << endl;
+//}
+
+void overload_test(string &str)
+{
+    cout << str << endl;
+}
+
+void overload_test(const string &str)
+{
+    cout << str << endl;
+}
+
+void overload_test(string *str)
+{
+    cout << *str << endl;
+}
+
+void overload_test(const string *str)
+{
+    cout << *str << endl;
+}
+
 void chapter_6()
 {
     int i = 0, j[2] = {0, 1};
@@ -71,5 +101,15 @@ void chapter_6()
 
 //     manip() = "nihao";
 //     cout << "manip(): " << manip() << endl;
+    string strVal("a value");
+    cout << "strVal: " << strVal << endl;
+    get_val(strVal, 0) = 'A';
+    cout << "strVal: " << strVal << endl;
 
+    string strNonConstVal("non const overload");
+    const string strConstVal("const overload");
+    overload_test(strNonConstVal);
+    overload_test(strConstVal);
+    overload_test(&strNonConstVal);
+    overload_test(&strConstVal);
 }
