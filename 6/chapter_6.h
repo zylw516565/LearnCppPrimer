@@ -83,6 +83,18 @@ void overload_test(const string *str)
     cout << *str << endl;
 }
 
+const string& shorterString(const string &s1, const string& s2)
+{
+    return s1.size() <= s2.size() ? s1 : s2;
+}
+
+string& shorterString(string& s1, string& s2)
+{
+    auto& r = shorterString(const_cast<const string&>(s1), 
+                            const_cast<const string&>(s2));
+    return const_cast<string&>(r);
+}
+
 void chapter_6()
 {
     int i = 0, j[2] = {0, 1};
@@ -112,4 +124,7 @@ void chapter_6()
     overload_test(strConstVal);
     overload_test(&strNonConstVal);
     overload_test(&strConstVal);
+
+    string s1("nihao"), s2("nihao123");
+    cout << "shorterString(): " << shorterString(s1, s2) << endl;
 }
