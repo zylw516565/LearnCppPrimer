@@ -95,8 +95,40 @@ string& shorterString(string& s1, string& s2)
     return const_cast<string&>(r);
 }
 
+void func() { cout << "hi" << endl; }
+void func(int) { cout << "hi" << endl; }
+void func(int, int) { cout << "hi" << endl; }
+void func(double, double = 3.14) { cout << "hi" << endl; }
+void func(double) { cout << "hi" << endl; }
+
 void chapter_6()
 {
+    int sum = 0;
+    for (int i = 0; i < 6; i++)
+    {
+        sum += (1 << i);
+    }
+    cout << "sum: " << sum << endl;
+
+    int weekday = 1;
+    int tmp = sum >> weekday & 1;
+    bool bIsIn = (sum >> weekday & 1 == 1) ? true : false;
+    if (bIsIn) {
+        cout << "weekday(" << weekday << ") is in" << endl;
+    }else {
+        cout << "weekday(" << weekday << ") is not in" << endl;
+    }
+
+    weekday = 6;
+    bIsIn = (sum & (1 << weekday) == 1) ? true : false;
+    if (bIsIn) {
+        cout << "weekday(" << weekday << ") is in" << endl;
+    }
+    else {
+        cout << "weekday(" << weekday << ") is not in" << endl;
+    }
+
+
     int i = 0, j[2] = {0, 1};
     int k[10] = { 0 };
 //     printfunc(&i);
@@ -127,4 +159,7 @@ void chapter_6()
 
     string s1("nihao"), s2("nihao123");
     cout << "shorterString(): " << shorterString(s1, s2) << endl;
+
+//     func(5.6);
+//     func(42, 5.6);
 }
