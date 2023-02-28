@@ -9,6 +9,7 @@
 #include "../2/convert.h"
 #include "../3/aboutString.h"
 #include "../6/chapter_6.h"
+#include "../7/chapter_7.h"
 
 using  std::cout;
 using  std::endl;
@@ -21,7 +22,9 @@ int main()
     //add_item();
     //convert();
     //aboutString();
-    chapter_6();
+    //chapter_6();
+    chapter_7();
+
 
     getchar();
     return 0;
