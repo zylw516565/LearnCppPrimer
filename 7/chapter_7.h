@@ -55,6 +55,8 @@ public:
     Sales_data &combine(const Sales_data&)
     {}
 
+    /*inline */void test_inline();
+
 
 protected:
     std::string protectedBookNo;
@@ -63,6 +65,10 @@ private:
     unsigned units_sold = 0;
     double revenue = 0.0;
 };
+
+inline void Sales_data::test_inline()
+{
+}
 
 std::istream& read(std::istream& is, Sales_data& item);
 
