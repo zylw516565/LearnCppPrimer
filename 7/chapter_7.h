@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 
 using std::cout;
 using std::endl;
@@ -30,6 +31,42 @@ private:
 
 };
 
+class Sales_data
+{
+    friend std::istream& read(std::istream& is, Sales_data& item)
+    {
+        is >> item.protectedBookNo;
+
+        double price = 0;
+        is >> item.bookNo >> item.units_sold >> price >> item.protectedBookNo;
+        item.revenue = price * item.units_sold;
+        return is;
+    }
+
+public:
+	Sales_data() = default;
+    Sales_data(const std::string &s, unsigned n, double p)
+        :bookNo(s),units_sold(n), revenue(p*n)
+    {}
+    Sales_data(const std::string& s) :bookNo(s){}
+    Sales_data(std::istream& s){}
+
+    std::string isbn()const { return bookNo; }
+    Sales_data &combine(const Sales_data&)
+    {}
+
+
+protected:
+    std::string protectedBookNo;
+private:
+    std::string bookNo;
+    unsigned units_sold = 0;
+    double revenue = 0.0;
+};
+
+std::istream& read(std::istream& is, Sales_data& item);
+
+
 void readStream(std::istream& is)
 {
 }
@@ -42,5 +79,8 @@ void chapter_7()
     cout << "tmp = " << tmp << " pTmp = " << pTmp << endl;
 
     //A a;
+
+    Sales_data item;
+    read(std::cin, item);
 
 }

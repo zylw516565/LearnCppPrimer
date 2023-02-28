@@ -134,6 +134,7 @@
     <ClInclude Include="Version_test.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="7\chapter_7.cc" />
     <ClCompile Include="src\VsTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
