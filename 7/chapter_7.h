@@ -57,6 +57,12 @@ public:
 
     /*inline */void test_inline();
 
+    void some_member() const
+    {
+        //++access_ctr2;
+        ++access_ctr;
+    }
+
 
 protected:
     std::string protectedBookNo;
@@ -64,6 +70,9 @@ private:
     std::string bookNo;
     unsigned units_sold = 0;
     double revenue = 0.0;
+
+    mutable int access_ctr = 0;
+    int access_ctr2 = 0;
 };
 
 inline void Sales_data::test_inline()
