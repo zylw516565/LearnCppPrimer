@@ -70,7 +70,12 @@ public:
     explicit Sales_data(const std::string &s, unsigned n, double p)
         :bookNo(s),units_sold(n), revenue(p*n)
     {}
+
+#if 1
     explicit Sales_data(const std::string& s);
+#else
+    Sales_data(const std::string& s);
+#endif
     Sales_data(std::istream& s){}
 
     std::string isbn()const { return bookNo; }
@@ -189,6 +194,7 @@ void chapter_7()
     //item.combine(null_book);  //对应隐式转换的构造函数加上explicit,就编译不过
     item.combine(Sales_data("9-999-99999-9"));
     //item.combine("9-999-99999-9");
+    //Sales_data item2 = null_book;
 
 
     const Sales_data itemV2;
