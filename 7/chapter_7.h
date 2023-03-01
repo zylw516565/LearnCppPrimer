@@ -8,12 +8,19 @@ using std::endl;
 
 using std::string;
 
+class IncompleteClass;
+
 class Chapter7
 {
 private:
     int value;
     int *ptr;
     string str;
+
+    Chapter7 *chapter7Ptr_;
+    //Chapter7 chapter7_;
+    IncompleteClass *incompleteClassPtr_;
+    //IncompleteClass incompleteClass_;
 public:
 //     Chapter7()const
 //     {}
@@ -90,6 +97,9 @@ std::istream& read(std::istream& is, Sales_data& item);
 void readStream(std::istream& is)
 {
 }
+
+
+
 
 void chapter_7()
 {
