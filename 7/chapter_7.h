@@ -63,6 +63,11 @@ public:
         ++access_ctr;
     }
 
+    void some_member_v2()
+    {
+        ++access_ctr;
+    }
+
 
 protected:
     std::string protectedBookNo;
@@ -96,6 +101,11 @@ void chapter_7()
     //A a;
 
     Sales_data item;
-    read(std::cin, item);
+    //read(std::cin, item);
 
+    item.some_member();
+
+    const Sales_data itemV2;
+    //itemV2.some_member_v2();
+    itemV2.some_member();
 }
