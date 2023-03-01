@@ -131,8 +131,43 @@ public:
 };
 
 
+class Sales_dataV2
+{
+public:
+    //非委托构造函数
+    Sales_dataV2(const std::string& s, unsigned n, double p)
+        :bookNo(s), units_sold(n), revenue(p* n)
+    {
+        cout << "Sales_dataV2(const std::string& s, unsigned n, double p)" << endl;
+    }
+
+    Sales_dataV2():Sales_dataV2("", 0, 0)
+    {
+        cout << "Sales_dataV2()" << endl;
+    }
+
+    Sales_dataV2(const std::string& s):Sales_dataV2(s, 0, 0)
+    {
+        cout << "Sales_dataV2(const std::string& s)" << endl;
+    }
+
+    Sales_dataV2(std::istream& s):Sales_dataV2()
+    {
+        cout << "Sales_dataV2(std::istream& s)" << endl;
+    }
+
+private:
+    std::string bookNo;
+    unsigned units_sold = 0;
+    double revenue = 0.0;
+};
+
 void chapter_7()
 {
+    Sales_dataV2 objSales_dataV2;
+    Sales_dataV2 objSales_dataV2_2("hello");
+    Sales_dataV2 objSales_dataV2_3(std::cin);
+
     readStream(std::cin);
 //     int tmp;
 //     int *pTmp;
