@@ -10,12 +10,18 @@ using std::string;
 
 class IncompleteClass;
 
+typedef double Money;
 class Chapter7
 {
+public:
+    Money balance() { return bal; }
 private:
     int value;
     int *ptr;
     string str;
+
+    //typedef double Money;  GCC编译不过,VS可以
+    Money bal;
 
     Chapter7 *chapter7Ptr_;
     //Chapter7 chapter7_;
@@ -28,7 +34,16 @@ public:
      Chapter7(int tmp)
      {}
 
+     int getextValue();
+
 };
+
+//Chapter7::int extValue_;
+int Chapter7::getextValue()
+{
+    //return extValue_;
+    return 0;
+}
 
 class A
 {
@@ -98,7 +113,17 @@ void readStream(std::istream& is)
 {
 }
 
+class ConstRef
+{
+private:
+    int i;
+    const int ci;
+    int& ri;
 
+public:
+    ConstRef(int ii) {}
+	~ConstRef();
+};
 
 
 void chapter_7()
