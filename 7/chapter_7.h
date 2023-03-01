@@ -117,8 +117,9 @@ class ConstRef
 {
 private:
     int i;
-    const int ci;
-    int& ri;
+//     const int ci;
+//     int& ri;
+//    Chapter7 chapter7;
 
 public:
     ConstRef(int ii) {}
