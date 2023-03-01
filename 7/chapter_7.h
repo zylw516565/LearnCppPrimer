@@ -31,7 +31,7 @@ public:
 //     Chapter7()const
 //     {}
 
-     Chapter7(int tmp)
+     Chapter7(int tmp = 0)
      {}
 
      int getextValue();
@@ -120,7 +120,7 @@ private:
     int j;
 //     const int ci;
 //     int& ri;
-//    Chapter7 chapter7;
+    Chapter7 chapter7;
 
 public:
     ConstRef(int val)
