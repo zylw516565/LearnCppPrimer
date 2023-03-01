@@ -117,12 +117,16 @@ class ConstRef
 {
 private:
     int i;
+    int j;
 //     const int ci;
 //     int& ri;
 //    Chapter7 chapter7;
 
 public:
-    ConstRef(int ii) {}
+    ConstRef(int val)
+    :j(val)
+    ,i(j)
+    {}
 	~ConstRef();
 };
 
@@ -130,9 +134,9 @@ public:
 void chapter_7()
 {
     readStream(std::cin);
-    int tmp;
-    int *pTmp;
-    cout << "tmp = " << tmp << " pTmp = " << pTmp << endl;
+//     int tmp;
+//     int *pTmp;
+//     cout << "tmp = " << tmp << " pTmp = " << pTmp << endl;
 
     //A a;
 

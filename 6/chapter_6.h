@@ -35,18 +35,18 @@ void foo6(int n, ...)
     cout << "n = " << n << endl;
 }
 
-string &manip()
-{
-    string ret2("world !!!");
-    string ret;
-    ret.assign("hello");
-
-    if (!ret.empty())
-        return ret;   //错误, ret是一个局部临时量
-    else
-        return ret2;  //错误,"Empty"是一个局部临时量
-
-}
+// string &manip()
+// {
+//     string ret2("world !!!");
+//     string ret;
+//     ret.assign("hello");
+// 
+//     if (!ret.empty())
+//         return ret;   //错误, ret是一个局部临时量
+//     else
+//         return ret2;  //错误,"Empty"是一个局部临时量
+// 
+// }
 
 char &get_val(string &str, string::size_type ix)
 {
