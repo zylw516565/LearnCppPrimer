@@ -67,15 +67,17 @@ class Sales_data
 
 public:
 	Sales_data() = default;
-    Sales_data(const std::string &s, unsigned n, double p)
+    explicit Sales_data(const std::string &s, unsigned n, double p)
         :bookNo(s),units_sold(n), revenue(p*n)
     {}
-    Sales_data(const std::string& s) :bookNo(s){}
+    explicit Sales_data(const std::string& s);
     Sales_data(std::istream& s){}
 
     std::string isbn()const { return bookNo; }
     Sales_data &combine(const Sales_data&)
-    {}
+    {
+        return *this;
+    }
 
     /*inline */void test_inline();
 
@@ -101,6 +103,12 @@ private:
     mutable int access_ctr = 0;
     int access_ctr2 = 0;
 };
+
+//explicit
+Sales_data::Sales_data(const std::string& s)
+:bookNo(s)
+{
+}
 
 inline void Sales_data::test_inline()
 {
@@ -174,11 +182,14 @@ void chapter_7()
 //     cout << "tmp = " << tmp << " pTmp = " << pTmp << endl;
 
     //A a;
-
+    string null_book("9-999-99999-9");
     Sales_data item;
     //read(std::cin, item);
-
     item.some_member();
+    //item.combine(null_book);  //对应隐式转换的构造函数加上explicit,就编译不过
+    item.combine(Sales_data("9-999-99999-9"));
+    //item.combine("9-999-99999-9");
+
 
     const Sales_data itemV2;
     //itemV2.some_member_v2();
