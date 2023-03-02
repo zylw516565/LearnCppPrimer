@@ -1,0 +1,98 @@
+#pragma once
+
+#include <map>
+#include <list>
+#include <string>
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+using std::string;
+using std::map;
+
+class NoDefault
+{
+public:
+	//NoDefault() = default;
+    NoDefault(const int& n) {}
+	~NoDefault();
+protected:
+	
+private:
+};
+
+void init()
+{}
+
+vector<int> vecInt(10,1);
+
+std::list<string> names;
+//vector<char> oldstyle;
+vector<const char*> oldstyle;
+
+//vector<NoDefault> vecNoDefault(10);
+
+void VectorTest()
+{
+    vector<int> vec;
+    for (int i = 0; i < 5; i++)
+    {
+        vec.push_back(i);
+    }
+    vector<int>::iterator it;
+    cout << sizeof(it) << endl;
+    for (it = vec.begin(); it != vec.end(); )
+    {
+#if 1
+        if (*it > 2)
+            it = vec.erase(it);
+        else
+            it++;
+#else
+        if (*it > 2)
+            vec.erase(it);//此处会发生迭代器失效
+#endif
+    }
+    for (it = vec.begin(); it != vec.end(); it++)
+        cout << *it << " ";
+    cout << endl;
+}
+
+void mapTest()
+{
+    map<int, int>m;
+    for (int i = 0; i < 10; i++)
+    {
+        m.insert(std::make_pair(i, i + 1));
+    }
+    map<int, int>::iterator it;
+
+    for (it = m.begin(); it != m.end(); )
+    {
+        if (it->first == 5)
+            m.erase(it++);
+        it++;
+    }
+    for (it = m.begin(); it != m.end(); it++)
+    {
+        cout << (*it).first << " ";
+    }
+    cout << endl;
+}
+
+void chapter_9()
+{
+	//vector<NoDefault> v2(10, init);
+	//vector<NoDefault> v2(10);
+	auto b = vecInt.begin();
+	//auto e = vecInt.end();
+	auto e = b++;
+	//vecInt.assign(b, e);
+
+	names.assign(oldstyle.begin(), oldstyle.end());
+
+    VectorTest();
+    mapTest();
+    system("pause");
+}

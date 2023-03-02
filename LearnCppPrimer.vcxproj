@@ -128,6 +128,7 @@
     <ClInclude Include="3\aboutString.h" />
     <ClInclude Include="6\chapter_6.h" />
     <ClInclude Include="7\chapter_7.h" />
+    <ClInclude Include="9\chapter_9.h" />
     <ClInclude Include="Sales_item.h" />
     <ClInclude Include="2\convert.h" />
     <ClInclude Include="src\VsTest.h" />
@@ -135,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="7\chapter_7.cc" />
+    <ClCompile Include="9\chapter_9.cc" />
     <ClCompile Include="src\VsTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
