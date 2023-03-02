@@ -175,6 +175,31 @@ private:
     double revenue = 0.0;
 };
 
+class Account
+{
+public:
+    void printPeriod(const int &n)
+    {
+        cout << n << endl;
+    }
+
+    void clear(int = bkground)
+    {
+        std::cout << "bkground: " << bkground << std::endl;
+    }
+
+    static constexpr int period = 30;
+private:
+    double daily_tbl[period];
+    static const int bkground;
+
+    static const int vecSize = 20;
+    //static vector<double> vec(vecSize);
+};
+
+constexpr int Account::period;
+const int Account::bkground = 2;
+
 void chapter_7()
 {
     Sales_dataV2 objSales_dataV2;
@@ -200,4 +225,9 @@ void chapter_7()
     const Sales_data itemV2;
     //itemV2.some_member_v2();
     itemV2.some_member();
+
+    cout << Account::period << endl;
+    Account account;
+    account.printPeriod(Account::period);
+    account.clear();
 }
