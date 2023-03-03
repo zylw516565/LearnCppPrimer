@@ -130,6 +130,9 @@ void testString()
     string s6(s1, 6);
     string s7(s1, 6, 20);
     //string s8(s1, 16);  //抛出异常
+
+    //string s8 = s1.substr(s1.size()+1); //抛出异常
+    string s9 = s1.substr(0, 16);
 }
 
 void chapter_9()
