@@ -118,6 +118,20 @@ void testSizeAndCapacity()
 
 }
 
+void testString()
+{
+    const char* cp = "Hello World!!!";
+    char noNull[] = {'H', 'i'};
+    string s1(cp);
+    string s2(noNull, 2);
+    string s3(noNull);
+    string s4(cp+6, 5);
+    string s5(s1, 6, 5);
+    string s6(s1, 6);
+    string s7(s1, 6, 20);
+    //string s8(s1, 16);  //Å×³öÒì³£
+}
+
 void chapter_9()
 {
 	//vector<NoDefault> v2(10, init);
@@ -132,5 +146,6 @@ void chapter_9()
     VectorTest();
     mapTest();
     testSizeAndCapacity();
+    testString();
     system("pause");
 }
