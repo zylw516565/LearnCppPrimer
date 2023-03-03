@@ -81,6 +81,43 @@ void mapTest()
     cout << endl;
 }
 
+void testSizeAndCapacity()
+{
+    vector<int> ivec;
+    cout << "ivec: size: " << ivec.size()
+        << " ivec.capacity(): " << ivec.capacity() << endl;
+
+    for (vector<int>::size_type ix = 0; ix != 24; ++ix)
+        ivec.push_back(ix);
+
+    cout << "ivec: size: " << ivec.size()
+        << " ivec.capacity(): " << ivec.capacity() << endl;
+
+    ivec.reserve(10);
+    cout << "ivec: size: " << ivec.size()
+        << " ivec.capacity(): " << ivec.capacity() << endl;
+
+    ivec.reserve(50);
+    cout << "ivec: size: " << ivec.size()
+        << " ivec.capacity(): " << ivec.capacity() << endl;
+
+    while (ivec.size() != ivec.capacity())
+    {
+        ivec.push_back(0);
+    }
+    cout << "ivec: size: " << ivec.size()
+        << " ivec.capacity(): " << ivec.capacity() << endl;
+
+    ivec.push_back(32);
+    cout << "ivec: size: " << ivec.size()
+        << " ivec.capacity(): " << ivec.capacity() << endl;
+
+    ivec.shrink_to_fit();
+    cout << "ivec: size: " << ivec.size()
+        << " ivec.capacity(): " << ivec.capacity() << endl;
+
+}
+
 void chapter_9()
 {
 	//vector<NoDefault> v2(10, init);
@@ -94,5 +131,6 @@ void chapter_9()
 
     VectorTest();
     mapTest();
+    testSizeAndCapacity();
     system("pause");
 }
