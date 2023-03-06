@@ -11,6 +11,8 @@
 #include "../6/chapter_6.h"
 #include "../7/chapter_7.h"
 #include "../9/chapter_9.h"
+#include "../10/chapter_10.h"
+
 
 using  std::cout;
 using  std::endl;
@@ -25,7 +27,8 @@ int main()
     //aboutString();
     //chapter_6();
     //chapter_7();
-    chapter_9();
+    //chapter_9();
+    chapter_10();
 
 
     getchar();
