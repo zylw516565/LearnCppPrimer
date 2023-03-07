@@ -82,14 +82,18 @@ bool isShorter(const string &s1, const string& s2)
     return s1.size() < s2.size();
 }
 
-void testSortAndUnique()
+vector<string> words{"the", "quick", "red", "fox", "jumps", "over", "the", "slow", "red", "turtle"};
+
+void testSortAndUnique(vector<string> &words)
 {
-    vector<string> words{"the", "quick", "red", "fox", "jumps", "over", "the", "slow", "red", "turtle"};
     std::sort(words.begin(), words.end());
     auto uni_red = std::unique(words.begin(), words.end());
     words.erase(uni_red, words.end());
 
-    std::stable_sort(words.begin(), words.end(), isShorter);
+    //std::stable_sort(words.begin(), words.end(), isShorter);
+    std::stable_sort(words.begin(), words.end(), 
+                     [](const string& a, const string& b)
+                     {return a.size() < b.size(); });
 }
 
 void testLambda()
@@ -97,6 +101,45 @@ void testLambda()
     //auto f = [] {return 42; };
     auto f = [] { return 45; cout << "hello" << endl; };
     cout << "f(): " << f() << endl;
+
+    vector<int> vi;
+    std::transform(vi.begin(), vi.end(), vi.begin(),
+        [](int i) {return i < 0 ? -i : i; });
+
+    std::transform(vi.begin(), vi.end(), vi.begin(),
+        [](int i) 
+        {
+            if (i < 0)
+                return -i; 
+            else 
+                return i; 
+        }
+    );
+
+    std::transform(vi.begin(), vi.end(), vi.begin(),
+        [](int i) -> int
+        {
+            if (i < 0)
+                return -i;
+            else
+                return i;
+        }
+    );
+}
+
+void bigges(vector<string>& words, const string::size_type sz)
+{
+    testSortAndUnique(words);
+
+    auto wc = std::find_if(words.begin(), words.end(),
+        [sz](const string& a){return a.size() >= sz; }
+    );
+
+    auto count = words.end() - wc;
+    cout << count << " " << sz << endl;
+
+    for_each(wc, words.end(), [](const string& a) {cout << a << " "; });
+    cout << endl;
 }
 
 void chapter_10()
@@ -105,7 +148,7 @@ void chapter_10()
     //testEqualWithInvalidSize();
     testFill();
     testCopy();
-    testSortAndUnique();
     testLambda();
+    bigges(words, 5);
     system("pause");
 }
