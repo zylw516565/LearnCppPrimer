@@ -2,9 +2,11 @@
 
 #include <map>
 #include <list>
+#include <iosfwd>
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <functional>
 
 using std::cout;
 using std::endl;
@@ -142,6 +144,45 @@ void bigges(vector<string>& words, const string::size_type sz)
     cout << endl;
 }
 
+bool check_size(const string &s, string::size_type sz)
+{
+    return s.size() >= sz;
+}
+
+using namespace std::placeholders;
+
+void func1(int a, int b, int c, int d, int e)
+{
+    cout << "func1" << endl;
+}
+
+std::ostream& print(std::ostream &os, const string& s, char c)
+{
+    return os << s << c;
+}
+
+void testBind()
+{
+    bool bRet;
+    auto check6 = std::bind(check_size, std::placeholders::_1, 6);
+    string str("hello");
+    bRet = check6(str);
+    cout << bRet << endl;
+
+    auto check7 = std::bind(check_size, _1, _2);
+    str.assign("hello12");
+    bRet = check7(str, 7);
+    cout << bRet << endl;
+
+    int a(0), b(0), c(0);
+    auto g = std::bind(func1, a,b,_2,c,_1);
+    g(5,4);
+
+    std::bind(print, _1, _2, ' ');
+    auto funcPrint = std::bind(print, std::ref(cout), _1, ' ');
+    funcPrint("hello");
+}
+
 void chapter_10()
 {
     testEqual();
@@ -150,5 +191,6 @@ void chapter_10()
     testCopy();
     testLambda();
     bigges(words, 5);
+    testBind();
     system("pause");
 }
