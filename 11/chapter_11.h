@@ -74,6 +74,14 @@ void testSet()
         //*set_it = 42;  //错误: set中的关键字是只读的
         cout << *set_it << endl;
     }
+
+    set<int> iset2 = { 9,0,1,3,4,6,8,7,5,2};
+    set_it = iset2.begin();
+    while (set_it != iset2.end()) {
+        cout << *set_it << endl;
+        ++set_it;
+    }
+    cout << endl;
 }
 
 void chapter_11()
