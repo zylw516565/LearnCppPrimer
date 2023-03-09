@@ -37,7 +37,11 @@ void testMap()
 {
     map<string, size_t> word_count{ {"Tom",21}, {"Jason",23} };
 
-    word_count.insert({"word",1});
+    auto ret = word_count.insert({ "Jason",1 });
+    if (!ret.second){
+        ++((ret.first)->second);
+    }
+    auto ret2 = word_count.insert({"Peter",1});
 
     cout << "for 1" << endl;
     for(const auto &w : word_count)
