@@ -66,9 +66,20 @@ void testMap()
     map<string, int>::mapped_type  v5;
 }
 
+void testSet()
+{
+    set<int> iset = {0,1,2,3,4,5,6,7,8,9};
+    decltype(iset)::iterator set_it = iset.begin();
+    if (set_it != iset.end()){
+        //*set_it = 42;  //错误: set中的关键字是只读的
+        cout << *set_it << endl;
+    }
+}
+
 void chapter_11()
 {
     initSetAndMultiset();
     testMap();
+    testSet();
     system("pause");
 }
