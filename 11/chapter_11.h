@@ -37,6 +37,8 @@ void testMap()
 {
     map<string, size_t> word_count{ {"Tom",21}, {"Jason",23} };
 
+    word_count.insert({"word",1});
+
     cout << "for 1" << endl;
     for(const auto &w : word_count)
     {
@@ -82,6 +84,15 @@ void testSet()
         ++set_it;
     }
     cout << endl;
+
+    vector<int> ivec = {2,4,6,8,2,4,6,8};
+
+//     set<string> set3;
+//     set3.insert(ivec.cbegin(), ivec.cend());
+
+    set<int> set2;
+    set2.insert(ivec.cbegin(), ivec.cend());
+    set2.insert({1,3,5,7,1,3,5,7});
 }
 
 void chapter_11()
