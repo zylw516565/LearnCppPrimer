@@ -37,6 +37,7 @@ void testMap()
 {
     map<string, size_t> word_count{ {"Tom",21}, {"Jason",23} };
 
+    ++word_count["Jerry"];
     auto ret = word_count.insert({ "Jason",1 });
     if (!ret.second){
         ++((ret.first)->second);
@@ -64,6 +65,9 @@ void testMap()
         //it->first = "new key";  //错误,关键字是const的
         ++it->second;
     }
+
+//     const map<string, size_t> word_countV2{ {"Tom",21}, {"Jason",23} };
+//     word_countV2["Jerry"];
 
     set<string>::value_type        v1;
     set<string>::key_type          v2;
