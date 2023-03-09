@@ -10,6 +10,7 @@ using std::endl;
 
 using std::string;
 using std::map;
+using std::set;
 
 void initSetAndMultiset()
 {
@@ -32,8 +33,42 @@ void initSetAndMultiset()
     cout << miset.size() << endl;
 }
 
+void testMap()
+{
+    map<string, size_t> word_count{ {"Tom",21}, {"Jason",23} };
+
+    cout << "for 1" << endl;
+    for(const auto &w : word_count)
+    {
+        cout << w.first << " " << w.second << endl;
+    }
+
+    cout << "for 2" << endl;
+
+    for (auto it = word_count.begin(); it != word_count.end(); ++it)
+    {
+        cout << (*it).first << " " << (*it).second << endl;
+    }
+
+    cout << "for 3" << endl;
+
+    for (auto it = word_count.begin(); it != word_count.end(); ++it)
+    {
+        cout << it->first << " " << it->second << endl;
+        //it->first = "new key";  //错误,关键字是const的
+        ++it->second;
+    }
+
+    set<string>::value_type        v1;
+    set<string>::key_type          v2;
+    map<string, int>::value_type   v3;
+    map<string, int>::key_type     v4;
+    map<string, int>::mapped_type  v5;
+}
+
 void chapter_11()
 {
     initSetAndMultiset();
+    testMap();
     system("pause");
 }
