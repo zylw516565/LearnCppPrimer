@@ -69,4 +69,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="11\map_file.txt" />
+    <Text Include="11\input.txt" />
+  </ItemGroup>
 </Project>

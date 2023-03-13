@@ -3,7 +3,10 @@
 #include <set>
 #include <string>
 #include <iostream>
-
+#include <iosfwd>
+#include <fstream>
+#include <sstream>
+#include <stdexcept>
 
 using std::cout;
 using std::endl;
@@ -152,11 +155,88 @@ void testMultimap()
 
 }
 
+const map<string, string> buildMap(std::ifstream& map_file)
+{
+    map<string, string> transMap;
+
+    string line;
+    while (std::getline(map_file, line))
+    {
+        auto pos = line.find_first_of(" ");
+        if (pos < 1)
+            throw std::runtime_error("no rule !!!");
+        else
+        {
+            auto key = line.substr(0, pos);
+            auto value = line.substr(pos + 1);
+            transMap[key] = value;
+        }
+    }
+
+    return transMap;
+}
+
+const string transform(const string& orig_word, const map<string, string>& trans_map)
+{
+    auto iter = trans_map.find(orig_word);
+
+    if (iter != trans_map.end())
+        return iter->second;
+    else
+        return orig_word;
+}
+
+void wordTransform(std::ifstream& map_file, std::ifstream& input)
+{
+    auto trans_map = buildMap(map_file);
+
+    string text;
+    
+    while (std::getline(input, text))
+    {
+        std::istringstream stream(text);
+        string word;
+        bool firstword = true;
+        while (stream >> word)
+        {
+            if (firstword)
+                firstword = false;
+            else
+                cout << " ";
+
+            cout << transform(word, trans_map);
+        }
+        cout << endl;
+    }
+}
+
+void testWordTransform()
+{
+
+    std::ifstream map_file("./11/map_file.txt");
+    std::ifstream input("./11/input.txt");
+
+    if (!map_file.is_open())
+    {
+        std::cerr << "map_file.is_open failed !" << endl;
+        return;
+    }
+
+    if (!input.is_open())
+    {
+        std::cerr << "input.is_open failed !" << endl;
+        return;
+    }
+
+    wordTransform(map_file, input);
+}
+
 void chapter_11()
 {
     initSetAndMultiset();
     testMap();
     testSet();
     testMultimap();
+    testWordTransform();
     system("pause");
 }

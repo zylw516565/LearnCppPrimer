@@ -143,6 +143,10 @@
     <ClCompile Include="9\chapter_9.cc" />
     <ClCompile Include="src\VsTest.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="11\input.txt" />
+    <Text Include="11\map_file.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
