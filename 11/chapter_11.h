@@ -103,10 +103,60 @@ void testSet()
     set2.insert({1,3,5,7,1,3,5,7});
 }
 
+void testMultimap()
+{
+    std::multimap<string, string> authors;
+    authors.insert({"Barth, John", "Sot-"});
+    authors.insert({ "Barth, John", "Lost in the Funhouse" });
+    authors.insert({ "Barth, John", "AAA" });
+    authors.insert({ "Peter", "BBB" });
+
+    auto begin = authors.begin();
+    while (begin != authors.end())
+    {
+        cout << begin->first << " " << begin->second << endl;
+        ++begin;
+    }
+    cout << endl;
+
+    //1 way
+    string strSearchItem("Barth, John");
+    auto entries = authors.count(strSearchItem);    //元素数量
+    auto iter = authors.find(strSearchItem);
+    while (entries)
+    {
+        cout << iter->first << " " << iter->second << endl;
+        entries--;
+        iter++;
+    }
+    cout << endl;
+
+    //2 way
+    begin = authors.lower_bound(strSearchItem);
+    auto end = authors.upper_bound(strSearchItem);
+    while (begin != end)
+    {
+        cout << begin->first << " " << begin->second << endl;
+        begin++;
+    }
+    cout << endl;
+
+    //3 way
+    auto ret = authors.equal_range(strSearchItem);
+    while (ret.first != ret.second)
+    {
+        cout << ret.first->first << " " << ret.first->second << endl;
+        ret.first++;
+    }
+    cout << endl;
+
+}
+
 void chapter_11()
 {
     initSetAndMultiset();
     testMap();
     testSet();
+    testMultimap();
     system("pause");
 }
