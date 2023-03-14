@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClInclude Include="10\chapter_10.h" />
     <ClInclude Include="11\chapter_11.h" />
+    <ClInclude Include="12\chapter_12.h" />
     <ClInclude Include="1\add_item.h" />
     <ClInclude Include="1\item_io.h" />
     <ClInclude Include="3\aboutString.h" />
@@ -139,6 +140,7 @@
   <ItemGroup>
     <ClCompile Include="10\chapter_10.cc" />
     <ClCompile Include="11\chapter_11.cc" />
+    <ClCompile Include="12\chapter_12.cc" />
     <ClCompile Include="7\chapter_7.cc" />
     <ClCompile Include="9\chapter_9.cc" />
     <ClCompile Include="src\VsTest.cpp" />
