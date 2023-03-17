@@ -78,5 +78,6 @@
   <ItemGroup>
     <Text Include="11\map_file.txt" />
     <Text Include="11\input.txt" />
+    <Text Include="12\input.txt" />
   </ItemGroup>
 </Project>

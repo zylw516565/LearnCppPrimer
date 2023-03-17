@@ -110,24 +110,113 @@ void testAllocator()
     //cout << *q << endl;  //灾难: q指向未构造的内存
 }
 
-class TextQuery
+using TextVecType = std::vector<string>;
+
+using LineNoSet    = std::set<unsigned>;
+using LineNoSetPtr = std::shared_ptr<LineNoSet>;
+using WordLineNoMapType = std::map<string, LineNoSetPtr>;
+
+struct QueryResult
 {
-private:
-    std::vector<string> inputText_;
-    std::map<string, std::set<int>> wordLineNoMap_;
+//     explicit QueryResult()
+//         :word_(""),
+//         lineNo_(0),
+//         inputText_(nullptr),
+//         wordLineNoMap_(nullptr)
+//     {
+//     }
 
-public:
-    TextQuery(std::ifstream& infile)
-    {}
+    bool     isFind = false;
+    string   word_  = "";
+    std::shared_ptr<TextVecType> inputText_;
+    LineNoSetPtr                 lineNoSet_;
 
-    void query(const string& s)
+    void print(std::ostream &os)
     {
+        if (!isFind)
+        {
+            os << word_ << " dose not exsit !!!" << endl;
+            return;
+        }
+
+        if (lineNoSet_ && inputText_)
+        {
+            os << word_ << ":" << endl;
+            for (const auto& lineNo : *lineNoSet_)
+            {
+                os << (lineNo + 1) << " " << inputText_->at(lineNo) << endl;
+            }
+        }
+        else
+        {
+            os << "Error: null ptr !!!" << endl;
+        }
     }
 };
 
-// ostream &print(ostream &os)
-// {
-// }
+class TextQuery
+{
+private:
+    std::shared_ptr<TextVecType> inputText_;
+    std::shared_ptr<WordLineNoMapType> wordLineNoMap_;
+
+public:
+    TextQuery(std::ifstream& infile)
+        :inputText_(std::make_shared<TextVecType>(TextVecType())),
+        wordLineNoMap_(std::make_shared<WordLineNoMapType>(WordLineNoMapType()))
+    {
+        parseInputFile(infile);
+    }
+
+    const std::shared_ptr<QueryResult> query(const string& word)
+    {
+        std::shared_ptr<QueryResult> sp(std::make_shared<QueryResult>(QueryResult()));
+        sp->word_ = word;
+        sp->inputText_ = inputText_;
+        auto iter = wordLineNoMap_->find(word);
+        if (iter != wordLineNoMap_->end())
+        {
+            sp->isFind = true;
+            sp->lineNoSet_ = iter->second;
+        }
+        else
+        {
+            sp->isFind = false;
+            sp->lineNoSet_ = nullptr;
+        }
+
+        return sp;
+    }
+
+private:
+    void parseInputFile(std::ifstream& infile)
+    {
+        string line; unsigned lineNo = 0;
+        while (std::getline(infile, line))
+        {
+            inputText_->emplace_back(line);
+
+            string word;
+            std::istringstream stream(line);
+            while (stream >> word)
+            {
+                auto iter = wordLineNoMap_->find(word);
+                if (iter != wordLineNoMap_->end())
+                    iter->second->insert(lineNo);
+                else
+                    wordLineNoMap_->insert(make_pair(word, std::make_shared<LineNoSet>(LineNoSet{ lineNo })));
+            }
+
+            lineNo++;
+        }
+    }
+};
+
+std::ostream& print(std::ostream &os, const std::shared_ptr<QueryResult>& qr)
+{
+    qr->print(os);
+    return os;
+}
 
 void runQueries(std::ifstream &infile)
 {
@@ -140,8 +229,21 @@ void runQueries(std::ifstream &infile)
         string s;
         if(!(std::cin >> s) || "q" == s) break;
 
-        //print(cout, tq.query(s)) << endl;
+        print(cout, tq.query(s)) << endl;
     }
+}
+
+void testQueries()
+{
+    std::ifstream input("./12/input.txt");
+
+    if (!input.is_open())
+    {
+        std::cerr << "input.is_open failed !" << endl;
+        return;
+    }
+
+    runQueries(input);
 }
 
 void chapter_12()
@@ -149,5 +251,6 @@ void chapter_12()
     testCircularReference();
     testDynamicArray();
     testAllocator();
+    testQueries();
     system("pause");
 }
