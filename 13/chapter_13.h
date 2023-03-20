@@ -161,6 +161,9 @@ private:
     std::size_t* use;
 
 public:
+
+    friend void swap(LikePtr&, LikePtr&);
+
     LikePtr(const string& s = string())
         :ps(new string(s)),
         i(0),
@@ -194,6 +197,12 @@ public:
         return *this;
     }
 
+    LikePtr& operator=(LikePtr rhs)
+    {
+        swap(*this, rhs);
+        return *this;
+    }
+
     ~LikePtr()
     {
         if (!--(*use))
@@ -203,6 +212,21 @@ public:
         }
     }
 };
+
+inline void swap(LikePtr& lhs, LikePtr& rhs)
+{
+    using std::swap;
+    swap(lhs.ps, rhs.ps);
+    swap(lhs.i, rhs.i);
+
+//     auto tmpps = lhs.ps;
+//     lhs.ps = rhs.ps;
+//     rhs.ps = tmpps;
+// 
+//     auto tmpi = lhs.i;
+//     lhs.i = rhs.i;
+//     rhs.i = tmpi;
+}
 
 void testHasPtr()
 {
