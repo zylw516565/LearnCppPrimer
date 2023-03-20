@@ -153,6 +153,57 @@ public:
 
 };
 
+class LikePtr
+{
+private:
+    string* ps;
+    int      i;
+    std::size_t* use;
+
+public:
+    LikePtr(const string& s = string())
+        :ps(new string(s)),
+        i(0),
+        use(new std::size_t(1))
+    {}
+
+    LikePtr(const LikePtr& rhs)
+        :ps(rhs.ps),
+        i(rhs.i),
+        use(rhs.use)
+    {
+        ++(*use);
+    }
+
+    LikePtr& operator=(const LikePtr& rhs)
+    {
+        if (this == &rhs)
+            return *this;
+
+        ++(*rhs.use);
+        if (!--(*use))
+        {
+            delete ps;
+            delete use;
+        }
+
+        ps = rhs.ps;
+        i = rhs.i;
+        use = rhs.use;
+
+        return *this;
+    }
+
+    ~LikePtr()
+    {
+        if (!--(*use))
+        {
+            delete ps;
+            delete use;
+        }
+    }
+};
+
 void testHasPtr()
 {
     HasPtr objHasPtr;
