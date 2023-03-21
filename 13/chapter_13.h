@@ -234,6 +234,94 @@ void testHasPtr()
     objHasPtr = objHasPtr;
 }
 
+class StrVec
+{
+private:
+    string* elements = nullptr;
+    string* first_free = nullptr;
+    string* cap = nullptr;
+    static std::allocator<string> alloc;
+
+public:
+    StrVec() :elements(nullptr),
+        first_free(nullptr),
+        cap(nullptr)
+    {}
+
+    StrVec(const StrVec& rhs)
+    {
+    }
+
+    StrVec& operator=(const StrVec& rhs);
+    ~StrVec();
+
+    void push_back(const std::string&);
+    std::size_t size();
+    std::size_t capacity();
+
+private:
+    void alloc_n_copy(const StrVec& rhs)
+//         string* elements,
+//         string* first_free,
+//         string* cap)
+    {
+        if (nullptr    == rhs.elements
+            || nullptr == rhs.first_free
+            || nullptr == rhs.cap)
+            return;
+
+        auto rhsbegin = rhs.elements;
+        auto size = rhs.first_free - rhs.elements;
+        auto capSize = rhs.cap - rhs.elements;
+        elements = alloc.allocate(rhs.cap - rhs.elements);
+        first_free = elements + size;
+        cap = elements + capSize;
+        auto begin = elements;
+
+        while (begin <= first_free)
+        {
+            alloc.construct(begin++, *(rhsbegin++));
+        }
+
+        //std::copy(elements, first_free, dest);
+    }
+
+    void free()
+    {
+        while (first_free != elements)
+            alloc.destroy(--first_free);
+
+        alloc.deallocate(elements, cap - elements);
+    }
+
+    void chk_n_alloc()
+    {
+        if(first_free >= cap)
+            reallocate();
+    }
+
+    void reallocate()
+    {
+        auto size = first_free - elements;
+        auto capSize = cap - elements;
+        auto newElements = alloc.allocate(capSize * 2);
+        auto newbegin = newElements;
+        while (elements <= first_free)
+        {
+            alloc.construct(newbegin++, *elements++);
+        }
+
+        free();
+        elements = newElements;
+        first_free = newElements + size;
+        cap = newElements + capSize;
+    }
+
+};
+
+std::allocator<string> StrVec::alloc;
+
+
 void chapter_13()
 {
     testSynthesizedCopyConstructor();
