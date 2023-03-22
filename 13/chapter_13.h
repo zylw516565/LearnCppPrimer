@@ -262,15 +262,33 @@ public:
         rhs.elements = rhs.first_free = rhs.cap = nullptr;
     }
 
+    StrVec& operator=(StrVec&& rhs) noexcept
+    {
+        if (this != &rhs) {
+            free();
+            elements = rhs.elements;
+            first_free = rhs.first_free;
+            cap = rhs.cap;
+            rhs.elements = rhs.first_free = rhs.cap = nullptr;
+        }
+        return *this;
+    }
+
 
     ~StrVec()
     {
         free();
     }
 
-    void push_back(const std::string&);
-    std::size_t size();
-    std::size_t capacity();
+    void push_back(const std::string& s)
+    {
+        chk_n_alloc();
+        alloc.construct(first_free++, s);
+    }
+
+    std::size_t size() const { return first_free - elements;}
+    std::size_t capacity() const { return cap - elements; }
+
 
     void testnoexcept() noexcept;
 
@@ -303,15 +321,17 @@ private:
 
     void free()
     {
-        while (first_free != elements)
-            alloc.destroy(--first_free);
+        if (elements){
+            for (auto begin = first_free; begin != elements; )
+                alloc.destroy(--begin);
 
-        alloc.deallocate(elements, cap - elements);
+            alloc.deallocate(elements, cap - elements);
+        }
     }
 
     void chk_n_alloc()
     {
-        if(first_free >= cap)
+        if(size() >= capacity())
             reallocate();
     }
 
@@ -340,6 +360,13 @@ void StrVec::testnoexcept() noexcept
 {
 }
 
+void testStrVec()
+{
+    StrVec objStrVec; const StrVec cstrVec;
+    objStrVec.size();
+    cstrVec.size();
+}
+
 using std::move;
 
 void testRValue()
@@ -365,6 +392,7 @@ void chapter_13()
 {
     testSynthesizedCopyConstructor();
     testHasPtr();
+    testStrVec();
     testRValue();
     system("pause");
 }
