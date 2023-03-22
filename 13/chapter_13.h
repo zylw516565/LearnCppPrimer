@@ -252,7 +252,11 @@ public:
     {
     }
 
-    StrVec& operator=(const StrVec& rhs);
+    StrVec& operator=(const StrVec& rhs)
+    {
+        cout << "operator=" << endl;
+        return *this;
+    }
 
     StrVec(StrVec &&rhs) noexcept
         :elements(rhs.elements),
@@ -360,11 +364,20 @@ void StrVec::testnoexcept() noexcept
 {
 }
 
+StrVec getStrVec()
+{
+    return StrVec();
+}
+
 void testStrVec()
 {
     StrVec objStrVec; const StrVec cstrVec;
     objStrVec.size();
     cstrVec.size();
+
+    StrVec v1, v2;
+    v1 = v2;
+    v2 = getStrVec();
 }
 
 using std::move;
