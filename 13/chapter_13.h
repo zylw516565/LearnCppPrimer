@@ -253,11 +253,26 @@ public:
     }
 
     StrVec& operator=(const StrVec& rhs);
-    ~StrVec();
+
+    StrVec(StrVec &&rhs) noexcept
+        :elements(rhs.elements),
+        first_free(rhs.first_free),
+        cap(rhs.cap)
+    {
+        rhs.elements = rhs.first_free = rhs.cap = nullptr;
+    }
+
+
+    ~StrVec()
+    {
+        free();
+    }
 
     void push_back(const std::string&);
     std::size_t size();
     std::size_t capacity();
+
+    void testnoexcept() noexcept;
 
 private:
     void alloc_n_copy(const StrVec& rhs)
@@ -321,10 +336,35 @@ private:
 
 std::allocator<string> StrVec::alloc;
 
+void StrVec::testnoexcept() noexcept
+{
+}
+
+using std::move;
+
+void testRValue()
+{
+    int i = 42;
+    int &r = i;
+    //int&& rr = i;
+    //int &r2 = i * 42;
+    const int &r3 = i * 42;
+    int &&rr2 = i * 42;
+
+    //变量是左值,变量可以看成变量表达式
+    int &&rr3 = 42;
+    //int &&rr4 = r3;
+    rr3 = 3;
+    cout << "rr3: " << rr3 << endl;
+    int&& rr4 = move(rr3);
+    //int &&rr4 = std::move(rr3);
+    std::cout << "rr4: " << rr4 << endl;
+}
 
 void chapter_13()
 {
     testSynthesizedCopyConstructor();
     testHasPtr();
+    testRValue();
     system("pause");
 }
