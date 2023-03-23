@@ -386,8 +386,10 @@ void testStrVec()
     v2 = getStrVec();
 
     string s = "some string or another";
+    string s2 = "hello";
 //     v1.push_back("done");
 //     v1.push_back(s);
+//    v1.push_back(s + s2);
 
 }
 
@@ -430,11 +432,64 @@ void testMoveCtor()
     TestMoveCtor1 objTestMoveCtor2 = std::move(objTestMoveCtor1);
 }
 
+class Foo
+{
+private:
+    vector<int> data_;
+
+public:
+    Foo& operator=(const Foo&) &;
+    Foo& operator=(const Foo&)&&
+    {
+        return *this;
+    }
+
+    //Foo someMem()& const;
+    Foo anotherMem()const &;
+
+    Foo sorted()&&
+    {
+        std::sort(data_.begin(), data_.end());
+        return *this;
+    }
+
+    Foo sorted() const&
+    {
+        Foo ret(*this);
+        std::sort(ret.data_.begin(), ret.data_.end());
+        return ret;
+    }
+};
+
+Foo& Foo::operator=(const Foo&) &
+{
+    return *this;
+}
+
+Foo gFoo;
+//返回左值
+Foo& retFoo() { return gFoo; }
+
+//返回右值
+Foo retVal() { return Foo(); }
+
+void testFoo()
+{
+    Foo foo1; Foo foo2;
+    foo1 = foo2;
+    retFoo() = foo1;
+    retVal() = foo2;
+    retFoo().sorted();
+    retVal().sorted();
+
+}
+
 void chapter_13()
 {
     testSynthesizedCopyConstructor();
     testHasPtr();
     testStrVec();
     testRValue();
+    testFoo();
     system("pause");
 }
