@@ -290,6 +290,12 @@ public:
         alloc.construct(first_free++, s);
     }
 
+    void push_back(std::string &&s)
+    {
+        chk_n_alloc();
+        alloc.construct(first_free++, std::move(s));
+    }
+
     std::size_t size() const { return first_free - elements;}
     std::size_t capacity() const { return cap - elements; }
 
@@ -378,6 +384,11 @@ void testStrVec()
     StrVec v1, v2;
     v1 = v2;
     v2 = getStrVec();
+
+    string s = "some string or another";
+//     v1.push_back("done");
+//     v1.push_back(s);
+
 }
 
 using std::move;
