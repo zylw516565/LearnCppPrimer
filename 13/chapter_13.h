@@ -401,6 +401,24 @@ void testRValue()
     std::cout << "rr4: " << rr4 << endl;
 }
 
+struct TestMoveCtor1
+{
+    TestMoveCtor1() = default;
+
+    TestMoveCtor1(const TestMoveCtor1& rhs)
+        :n_(rhs.n_)
+    {
+    }
+
+    int n_ = 0;
+};
+
+void testMoveCtor()
+{
+    TestMoveCtor1 objTestMoveCtor1; objTestMoveCtor1.n_ = 1;
+    TestMoveCtor1 objTestMoveCtor2 = std::move(objTestMoveCtor1);
+}
+
 void chapter_13()
 {
     testSynthesizedCopyConstructor();
