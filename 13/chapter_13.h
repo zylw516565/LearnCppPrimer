@@ -459,6 +459,8 @@ public:
         std::sort(ret.data_.begin(), ret.data_.end());
         return ret;
     }
+
+    //Foo sorted() const;
 };
 
 Foo& Foo::operator=(const Foo&) &
