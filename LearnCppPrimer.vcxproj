@@ -127,6 +127,7 @@
     <ClInclude Include="11\chapter_11.h" />
     <ClInclude Include="12\chapter_12.h" />
     <ClInclude Include="13\chapter_13.h" />
+    <ClInclude Include="14\chapter_14.h" />
     <ClInclude Include="1\add_item.h" />
     <ClInclude Include="1\item_io.h" />
     <ClInclude Include="3\aboutString.h" />
@@ -143,6 +144,7 @@
     <ClCompile Include="11\chapter_11.cc" />
     <ClCompile Include="12\chapter_12.cc" />
     <ClCompile Include="13\chapter_13.cc" />
+    <ClCompile Include="14\chapter_14.cc" />
     <ClCompile Include="7\chapter_7.cc" />
     <ClCompile Include="9\chapter_9.cc" />
     <ClCompile Include="src\VsTest.cpp" />

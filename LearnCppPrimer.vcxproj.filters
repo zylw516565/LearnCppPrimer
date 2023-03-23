@@ -57,6 +57,9 @@
     <ClInclude Include="13\chapter_13.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="14\chapter_14.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VsTest.cpp">
@@ -78,6 +81,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="13\chapter_13.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="14\chapter_14.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
