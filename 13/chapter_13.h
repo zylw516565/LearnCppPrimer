@@ -521,6 +521,9 @@ void testStrVec()
 //     v1.push_back(s);
 //    v1.push_back(s + s2);
 
+    StrVec v3;
+    v3 = { "ni", "hao", "a !" };
+
 }
 
 using std::move;
