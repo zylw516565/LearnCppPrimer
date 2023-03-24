@@ -659,5 +659,4 @@ void chapter_13()
     testStrVec();
     testRValue();
     testFoo();
-    system("pause");
 }

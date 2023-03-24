@@ -40,6 +40,7 @@ int main()
     chapter_13();
     chapter_14();
 
-    getchar();
+
+    system("pause");
     return 0;
 }
