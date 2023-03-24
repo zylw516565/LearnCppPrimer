@@ -73,8 +73,56 @@ void testFunction()
 
 }
 
+class SmallInt
+{
+private:
+    std::size_t val;
+public:
+    SmallInt(int i = 0)
+        :val(i)
+    {
+        if (i < 0 || i > 255)
+            throw std::out_of_range("Bad SmallInt value");
+    }
+
+//     int operator int() const;
+//     operator int(int = 0) const;
+//     operator int* () const { return 42; }
+
+    operator int() const { return val; }
+};
+
+//operator int(SmallInt&);
+class SmallIntV2
+{
+private:
+    std::size_t val;
+public:
+    SmallIntV2(int i = 0)
+        :val(i)
+    {
+        if (i < 0 || i > 255)
+            throw std::out_of_range("Bad SmallInt value");
+    }
+
+    explicit operator int() const { return val; }
+};
+
+void testSmallInt()
+{
+    SmallInt si;
+    si = 4;
+    si + 3;
+
+    SmallIntV2 siv2;
+    siv2 = 4;
+    //siv2 + 3;
+    static_cast<int>(siv2) + 3;
+}
+
 void chapter_14()
 {
     testOperator();
     testFunction();
+    testSmallInt();
 }
