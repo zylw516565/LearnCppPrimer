@@ -234,7 +234,7 @@ void testHasPtr()
     objHasPtr = objHasPtr;
 }
 
-class StrVec
+class StrVecMyEdition
 {
 private:
     string* elements = nullptr;
@@ -243,22 +243,22 @@ private:
     static std::allocator<string> alloc;
 
 public:
-    StrVec() :elements(nullptr),
+    StrVecMyEdition() :elements(nullptr),
         first_free(nullptr),
         cap(nullptr)
     {}
 
-    StrVec(const StrVec& rhs)
+    StrVecMyEdition(const StrVecMyEdition& rhs)
     {
     }
 
-    StrVec& operator=(const StrVec& rhs)
+    StrVecMyEdition& operator=(const StrVecMyEdition& rhs)
     {
         cout << "operator=" << endl;
         return *this;
     }
 
-    StrVec(StrVec &&rhs) noexcept
+    StrVecMyEdition(StrVecMyEdition&&rhs) noexcept
         :elements(rhs.elements),
         first_free(rhs.first_free),
         cap(rhs.cap)
@@ -266,7 +266,7 @@ public:
         rhs.elements = rhs.first_free = rhs.cap = nullptr;
     }
 
-    StrVec& operator=(StrVec&& rhs) noexcept
+    StrVecMyEdition& operator=(StrVecMyEdition&& rhs) noexcept
     {
         if (this != &rhs) {
             free();
@@ -279,7 +279,7 @@ public:
     }
 
 
-    ~StrVec()
+    ~StrVecMyEdition()
     {
         free();
     }
@@ -303,7 +303,7 @@ public:
     void testnoexcept() noexcept;
 
 private:
-    void alloc_n_copy(const StrVec& rhs)
+    void alloc_n_copy(const StrVecMyEdition& rhs)
 //         string* elements,
 //         string* first_free,
 //         string* cap)
@@ -364,7 +364,137 @@ private:
 
 };
 
+std::allocator<string> StrVecMyEdition::alloc;
+
+
+//***************************************************************
+class StrVec
+{
+private:
+    string* elements = nullptr;
+    string* first_free = nullptr;
+    string* cap = nullptr;
+    static std::allocator<string> alloc;
+
+public:
+    StrVec() :elements(nullptr),
+        first_free(nullptr),
+        cap(nullptr)
+    {}
+
+    StrVec(const StrVec& rhs)
+    {
+        auto ret = alloc_n_copy(rhs.begin(), rhs.end());
+        elements = ret.first;
+        first_free = cap = ret.second;
+    }
+
+    StrVec(StrVec&& rhs) noexcept
+        :elements(rhs.elements),
+        first_free(rhs.first_free),
+        cap(rhs.cap)
+    {
+        rhs.elements = rhs.first_free = rhs.cap = nullptr;
+    }
+
+    StrVec& operator=(const StrVec& rhs)
+    {
+        cout << "operator=" << endl;
+        return *this;
+    }
+
+    StrVec& operator=(StrVec&& rhs) noexcept
+    {
+        if (this != &rhs) {
+            free();
+            elements = rhs.elements;
+            first_free = rhs.first_free;
+            cap = rhs.cap;
+            rhs.elements = rhs.first_free = rhs.cap = nullptr;
+        }
+        return *this;
+    }
+
+    StrVec& operator=(initializer_list<string> il)
+    {
+        auto data = alloc_n_copy(il.begin(), il.end());
+        free();
+        elements = data.first;
+        first_free = cap = data.second;
+        return *this;
+    }
+
+    ~StrVec()
+    {
+        free();
+    }
+
+    void push_back(const std::string& s)
+    {
+        chk_n_alloc();
+        alloc.construct(first_free++, s);
+    }
+
+    void push_back(std::string&& s)
+    {
+        chk_n_alloc();
+        alloc.construct(first_free++, std::move(s));
+    }
+
+    std::size_t size() const { return first_free - elements; }
+    std::size_t capacity() const { return cap - elements; }
+    string* begin()const { return elements; }
+    string* end()const { return first_free; }
+
+
+    void testnoexcept() noexcept;
+
+private:
+
+    std::pair<string*, string*>
+    alloc_n_copy(const string *b, const string *e)
+    {
+        auto data = alloc.allocate(e - b);
+        return {data, uninitialized_copy(b, e, data)};
+    }
+
+    void free()
+    {
+        if (elements) {
+            for (auto begin = first_free; begin != elements; )
+                alloc.destroy(--begin);
+
+            alloc.deallocate(elements, cap - elements);
+        }
+    }
+
+    void chk_n_alloc()
+    {
+        if (size() >= capacity())
+            reallocate();
+    }
+
+    void reallocate()
+    {
+        auto size = first_free - elements;
+        auto capSize = cap - elements;
+        auto newElements = alloc.allocate(capSize * 2);
+        auto newbegin = newElements;
+        while (elements <= first_free)
+        {
+            alloc.construct(newbegin++, *elements++);
+        }
+
+        free();
+        elements = newElements;
+        first_free = newElements + size;
+        cap = newElements + capSize;
+    }
+
+};
+
 std::allocator<string> StrVec::alloc;
+
 
 void StrVec::testnoexcept() noexcept
 {
