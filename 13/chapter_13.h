@@ -424,6 +424,34 @@ public:
         return *this;
     }
 
+    StrVec& operator++()
+    {
+        cout << "StrVec& operator++" << endl;
+        return *this;
+    }
+
+    StrVec& operator--()
+    {
+        cout << "StrVec& operator--" << endl;
+        return *this;
+    }
+
+    StrVec operator++(int i)
+    {
+        StrVec ret(*this);
+        ++* this;
+        cout << "after ++ " << " i:" << i << endl;
+        return ret;
+    }
+
+    StrVec operator--(int i)
+    {
+        StrVec ret(*this);
+        --* this;
+        cout << "after -- " << " i:" << i << endl;
+        return ret;
+    }
+
     ~StrVec()
     {
         free();
@@ -523,7 +551,12 @@ void testStrVec()
 
     StrVec v3;
     v3 = { "ni", "hao", "a !" };
+    --v3;
+    ++v3;
 
+    v3.operator++(0);
+    v3++;
+//     v3--;
 }
 
 using std::move;
