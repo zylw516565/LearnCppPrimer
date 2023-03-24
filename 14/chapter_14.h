@@ -90,6 +90,8 @@ public:
 //     operator int* () const { return 42; }
 
     operator int() const { return val; }
+
+    operator SmallInt&() const {  }
 };
 
 //operator int(SmallInt&);
