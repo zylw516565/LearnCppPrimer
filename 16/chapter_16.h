@@ -30,10 +30,27 @@ int compare(const T& v1, const T& v2)
 // {
 // }
 
+// template <typename T, U>
+// T calc(const T&, const U&);
+
+template <typename T, class U> T calc(const T&, const U&);
+
+template <unsigned N, unsigned M>
+int compare(const char(&p1)[N], const char(&p2)[M])
+{
+    return strcmp(p1, p2);
+}
+
+//inline template <typename T> T min(const T&, const T&);
+template <typename T> inline T min(const T&, const T&);
+
 void testCompare()
 {
     cout << "compare(3, 1): " << compare(3, 1) << endl;
     cout << "compare<int>(3, 1): " << compare<int>(3, 1) << endl;
+
+    cout << "compare(\"hi\", \"mom\"): " << compare("hi", "mom") << endl;
+
 }
 
 void chapter_16()
