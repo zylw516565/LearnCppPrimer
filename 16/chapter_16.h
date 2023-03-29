@@ -53,6 +53,55 @@ void testCompare()
 
 }
 
+template<typename T>
+class Blob
+{
+public:
+    typedef typename std::vector<T>::size_type size_type;
+private:
+    std::shared_ptr<std::vector<T>> data;
+    void check(size_type i, const string& msg) const
+    {
+        if (i >= data->size())
+            throw std::out_of_range(msg);
+    }
+
+public:
+    Blob()
+        :data(std::make_shared<std::vector<T>>())
+    {}
+
+    Blob(std::initializer_list<T> il)
+        :data(std::make_shared<std::vector<T>>(il))
+    {}
+
+    size_type size() { return data->size(); }
+    bool empty() { return data->empty(); }
+    void push_back(const T& t) { data->push_back(t); }
+    void pop_back()
+    {
+        check(0, "pop_back on empty Blob");
+        data->pop_back();
+    }
+
+    T& front()
+    {
+        check(0, "front on empty Blob");
+        return data->front();
+    }
+
+    T& back()
+    {
+        check(0, "back on empty Blob");
+        return data->back();
+    }
+};
+
+void testBlob()
+{
+    Blob<string> strBlob;
+}
+
 void chapter_16()
 {
     testCompare();
