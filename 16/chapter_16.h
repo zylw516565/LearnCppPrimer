@@ -179,6 +179,13 @@ private:
 
 int StaticTest::tmp = 1;
 
+typedef double A2;
+template <typename A2, typename B> void f(A2 a, B b)
+{
+    A2 tmp = a;
+    //double B; GCC下会报错, VC++不报错
+}
+
 void testBlob()
 {
     Blob<string> strBlob({ "a", "an", "the" });
