@@ -53,18 +53,33 @@ void testCompare()
 
 }
 
+//Ç°ÖÃÉùÃ÷
+template<typename> class BlobPtr;
+template<typename> class Blob;
+
+template<typename T>
+bool operator==(const Blob<T>&, const Blob<T>&);
+
 template<typename T>
 class Blob
 {
 public:
     typedef typename std::vector<T>::size_type size_type;
+
+    friend class BlobPtr<T>;
+    friend bool operator==<T>(const Blob<T>&, const Blob<T>&);
 private:
     std::shared_ptr<std::vector<T>> data;
+
+#if 1
+    void check(size_type i, const string& msg) const;
+#else
     void check(size_type i, const string& msg) const
     {
         if (i >= data->size())
             throw std::out_of_range(msg);
     }
+#endif
 
 public:
     Blob()
@@ -78,6 +93,7 @@ public:
     size_type size() { return data->size(); }
     bool empty() { return data->empty(); }
     void push_back(const T& t) { data->push_back(t); }
+    void push_back(T&& t) { data->push_back(std::move(t)); }
     void pop_back()
     {
         check(0, "pop_back on empty Blob");
@@ -97,12 +113,27 @@ public:
     }
 };
 
+template <typename T>
+void Blob<T>::check(size_type i, const string& msg) const
+{
+    if (i >= data->size())
+        throw std::out_of_range(msg);
+}
+
+template<typename T>
+class BlobPtr
+{
+
+};
+
 void testBlob()
 {
-    Blob<string> strBlob;
+    Blob<string> strBlob({ "a", "an", "the" });
+    Blob<string> strBlob2 = {"a", "an", "the"};
 }
 
 void chapter_16()
 {
     testCompare();
+    testBlob();
 }
