@@ -123,7 +123,20 @@ void Blob<T>::check(size_type i, const string& msg) const
 template<typename T>
 class BlobPtr
 {
+};
 
+template <typename T> class Pal;
+class C
+{
+    friend class Pal<C>;
+    template <typename T> friend class Pal2;
+};
+
+template <typename T> class C2
+{
+    friend class Pal<T>;
+    template <typename X> friend class Pal3;
+    friend class Pal4;
 };
 
 void testBlob()
