@@ -139,10 +139,55 @@ template <typename T> class C2
     friend class Pal4;
 };
 
+template<typename Type> class Bar
+{
+    friend Type;
+};
+
+typedef Bar<int> BarInt;
+
+template <typename T> using twin = std::pair<T, T>;
+twin<string> authors;
+twin<int> win_loss;
+twin<double> area;
+
+template <typename T> using twin2 = std::pair<T, int>;
+
+template <typename T>
+class Foo2
+{
+public:
+    std::size_t size() { return ctr; }
+private:
+    static std::size_t ctr;
+};
+
+template <typename T>
+std::size_t Foo2<T>::ctr = 0;
+
+class StaticTest
+{
+public:
+    StaticTest()
+    {}
+
+    int getTmp() { return tmp; }
+
+private:
+    static int tmp;
+};
+
+int StaticTest::tmp = 1;
+
 void testBlob()
 {
     Blob<string> strBlob({ "a", "an", "the" });
     Blob<string> strBlob2 = {"a", "an", "the"};
+
+    Foo2<int> objFoo2;
+    objFoo2.size();
+    StaticTest objStaticTest;
+    cout << "objStaticTest.getTmp(): " << objStaticTest.getTmp() << endl;
 }
 
 void chapter_16()
