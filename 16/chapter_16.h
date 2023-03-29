@@ -44,6 +44,14 @@ int compare(const char(&p1)[N], const char(&p2)[M])
 //inline template <typename T> T min(const T&, const T&);
 template <typename T> inline T min(const T&, const T&);
 
+template <typename T, typename F = less<T>>
+int compare(const T& v1, const T& v2, F f=F())
+{
+    if (f(v1, v2)) return -1;
+    if (f(v2, v1)) return 1;
+    return 0;
+}
+
 void testCompare()
 {
     cout << "compare(3, 1): " << compare(3, 1) << endl;
@@ -186,6 +194,17 @@ template <typename A2, typename B> void f(A2 a, B b)
     //double B; GCC下会报错, VC++不报错
 }
 
+//template <typename T, typename T> class Foo3;
+
+template <typename T>
+typename T::value_type top(const T& c)
+{
+    if (!c.empty())
+        return c.back();
+    else
+        return typename T::value_type();
+}
+
 void testBlob()
 {
     Blob<string> strBlob({ "a", "an", "the" });
@@ -195,6 +214,8 @@ void testBlob()
     objFoo2.size();
     StaticTest objStaticTest;
     cout << "objStaticTest.getTmp(): " << objStaticTest.getTmp() << endl;
+
+    top<vector<int>>(vector<int>());
 }
 
 void chapter_16()
