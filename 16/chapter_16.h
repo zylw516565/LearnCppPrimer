@@ -271,6 +271,18 @@ public:
     }
 };
 
+template <typename T> T fobj(T t1, T t2)
+{
+    cout << "fobj: " << t1 << " " << t2 << endl;
+    return T();
+}
+
+template <typename T> T fref(const T& t1, const T& t2)
+{
+    cout << "fref: " << t1 << " " << t2 << endl;
+    return T();
+}
+
 void testDebugDelete()
 {
     double* p = new double;
@@ -282,6 +294,15 @@ void testDebugDelete()
 
     unique_ptr<int, DebugDelete> up(new int, DebugDelete());
     unique_ptr<string, DebugDelete> sp(new string, DebugDelete());
+
+    string s1("a value");
+    const string s2("another value");
+    fobj(s1, s2);
+    fref(s1, s2);
+
+    int a[10], b[42];
+    fobj(a, b);
+    //fref(a, b);  错误:数组类型不匹配
 }
 
 void chapter_16()
