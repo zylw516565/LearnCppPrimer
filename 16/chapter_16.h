@@ -205,6 +205,17 @@ typename T::value_type top(const T& c)
         return typename T::value_type();
 }
 
+template <typename T = int>
+class Numbers
+{
+private:
+    T val;
+public:
+    Numbers(T v = 0)
+        :val(v)
+    {}
+};
+
 void testBlob()
 {
     Blob<string> strBlob({ "a", "an", "the" });
@@ -216,6 +227,9 @@ void testBlob()
     cout << "objStaticTest.getTmp(): " << objStaticTest.getTmp() << endl;
 
     top<vector<int>>(vector<int>());
+
+    Numbers<long double> lots_of_precision;
+    Numbers<> average_precision;
 }
 
 void chapter_16()
