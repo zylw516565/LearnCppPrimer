@@ -334,9 +334,20 @@ T1 sum(T2, T3)
     return T1();
 }
 
+template <typename It>
+auto fcn(It beg, It end)->decltype(*beg)
+{
+    return *beg;
+}
+
 void testSum()
 {
     sum<int>(1, 2);
+
+    vector<int> vi = { 0,1,2,3,4,5,6,7,8,9 };
+    std::list<string> ca = { "a", "an", "the" };
+    auto& i = fcn(vi.begin(), vi.end());
+    auto& s = fcn(ca.begin(), ca.end());
 }
 
 void chapter_16()
