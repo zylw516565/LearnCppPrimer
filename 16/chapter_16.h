@@ -19,6 +19,7 @@ using std::shared_ptr;
 using std::unique_ptr;
 
 using std::vector;
+using std::ostream;
 
 template <typename T>
 int compare(const T& v1, const T& v2)
@@ -55,6 +56,19 @@ int compare(const T& v1, const T& v2, F f=F())
     return 0;
 }
 
+template <typename A, typename B>
+int flexibleCompare(const A& v1, const B& v2)
+{
+    if (v1 < v2) return -1;
+    if (v1 > v2) return 1;
+    return 0;
+}
+
+template <typename T> ostream& print(ostream& os, const T &obj)
+{
+    return os << obj;
+}
+
 void testCompare()
 {
     cout << "compare(3, 1): " << compare(3, 1) << endl;
@@ -62,6 +76,13 @@ void testCompare()
 
     cout << "compare(\"hi\", \"mom\"): " << compare("hi", "mom") << endl;
 
+    long lng;
+    //compare(lng, 1024);
+    flexibleCompare(lng, 1024);
+
+    print(cout, 42);
+    std::ofstream f("output");
+    print(f, 10);
 }
 
 //Ç°ÖÃÉùÃ÷
