@@ -92,6 +92,9 @@
     <ClCompile Include="16\chapter_16.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="16\templateBuild.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="11\map_file.txt" />

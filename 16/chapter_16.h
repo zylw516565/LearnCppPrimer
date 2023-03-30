@@ -8,7 +8,8 @@
 #include <sstream>
 #include <memory>
 #include <functional>
-
+#include <list>
+#include <vector>
 
 using std::cout;
 using std::endl;
@@ -16,6 +17,8 @@ using std::endl;
 using std::string;
 using std::shared_ptr;
 using std::unique_ptr;
+
+using std::vector;
 
 template <typename T>
 int compare(const T& v1, const T& v2)
@@ -98,6 +101,8 @@ public:
         :data(std::make_shared<std::vector<T>>(il))
     {}
 
+    template <typename It> Blob(It b, It e);
+
     size_type size() { return data->size(); }
     bool empty() { return data->empty(); }
     void push_back(const T& t) { data->push_back(t); }
@@ -119,7 +124,19 @@ public:
         check(0, "back on empty Blob");
         return data->back();
     }
+
+    T& operator[](size_type i)
+    {
+        check(i, "subscript out of range");
+        return (*data)[i];
+    }
 };
+
+template <typename T>
+template <typename It>
+Blob<T>::Blob(It b, It e)
+    :data(std::make_shared<std::vector<T>>(b, e))
+{}
 
 template <typename T>
 void Blob<T>::check(size_type i, const string& msg) const
@@ -230,6 +247,13 @@ void testBlob()
 
     Numbers<long double> lots_of_precision;
     Numbers<> average_precision;
+
+    int ia[] = {0,1,2,3,4,5,6,7,8,9};
+    vector<long> vi = { 0,1,2,3,4,5,6,7,8,9 };
+    std::list<const char*> w = { "a", "an", "the" };
+    Blob<int> a1(std::begin(ia), std::end(ia));
+    Blob<int> a2(vi.begin(), vi.end());
+    Blob<string> a3(w.begin(), w.end());
 }
 
 class DebugDelete
@@ -240,7 +264,7 @@ public:
     DebugDelete(std::ostream& s = std::cerr):os(s) {}
 
     template <typename T>
-    void operator()(T *p)
+    void operator()(T *p) const
     {
         os << "delete unique_ptr" << endl;
         delete p;
@@ -255,6 +279,9 @@ void testDebugDelete()
 
     int* ip = new int;
     DebugDelete()(ip);
+
+    unique_ptr<int, DebugDelete> up(new int, DebugDelete());
+    unique_ptr<string, DebugDelete> sp(new string, DebugDelete());
 }
 
 void chapter_16()

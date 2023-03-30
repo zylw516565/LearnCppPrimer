@@ -147,6 +147,7 @@
     <ClCompile Include="13\chapter_13.cc" />
     <ClCompile Include="14\chapter_14.cc" />
     <ClCompile Include="16\chapter_16.cc" />
+    <ClCompile Include="16\templateBuild.cc" />
     <ClCompile Include="7\chapter_7.cc" />
     <ClCompile Include="9\chapter_9.cc" />
     <ClCompile Include="src\VsTest.cpp" />
