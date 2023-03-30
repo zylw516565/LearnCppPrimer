@@ -232,8 +232,34 @@ void testBlob()
     Numbers<> average_precision;
 }
 
+class DebugDelete
+{
+private:
+    std::ostream &os;
+public:
+    DebugDelete(std::ostream& s = std::cerr):os(s) {}
+
+    template <typename T>
+    void operator()(T *p)
+    {
+        os << "delete unique_ptr" << endl;
+        delete p;
+    }
+};
+
+void testDebugDelete()
+{
+    double* p = new double;
+    DebugDelete d;
+    d(p);
+
+    int* ip = new int;
+    DebugDelete()(ip);
+}
+
 void chapter_16()
 {
     testCompare();
     testBlob();
+    testDebugDelete();
 }
