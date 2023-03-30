@@ -340,6 +340,12 @@ auto fcn(It beg, It end)->decltype(*beg)
     return *beg;
 }
 
+template <typename It>
+auto fcn2(It beg, It end)-> typename std::remove_reference<decltype(*beg)>::type
+{
+    return *beg;
+}
+
 void testSum()
 {
     sum<int>(1, 2);
@@ -348,6 +354,8 @@ void testSum()
     std::list<string> ca = { "a", "an", "the" };
     auto& i = fcn(vi.begin(), vi.end());
     auto& s = fcn(ca.begin(), ca.end());
+
+    auto i2 = fcn2(vi.begin(), vi.end());
 }
 
 void chapter_16()
