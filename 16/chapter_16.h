@@ -78,6 +78,8 @@ void testCompare()
 
     long lng;
     //compare(lng, 1024);
+    compare<long>(lng, 1024);
+    compare<int>(lng, 1024);
     flexibleCompare(lng, 1024);
 
     print(cout, 42);
@@ -326,9 +328,21 @@ void testDebugDelete()
     //fref(a, b);  错误:数组类型不匹配
 }
 
+template <typename T1, typename T2, typename T3>
+T1 sum(T2, T3)
+{
+    return T1();
+}
+
+void testSum()
+{
+    sum<int>(1, 2);
+}
+
 void chapter_16()
 {
     testCompare();
     testBlob();
     testDebugDelete();
+    testSum();
 }
