@@ -379,10 +379,41 @@ void testSum()
     f3(std::move(42));  //±»ÍÆ¶ÏÎª: void f3(int&&) {}
 }
 
+template <typename F, typename T1, typename T2>
+void flip1(F f, T1 t1, T2 t2)
+{
+    f(t2, t1);
+}
+template <typename F, typename T1, typename T2>
+void flip2(F f, T1 &&t1, T2 &&t2)
+{
+    f(t2, t1);
+}
+
+void f(int v1, int &v2)
+{
+    cout << v1 << " " << ++v2 << endl;
+}
+
+void g(int &&v1, int& v2)
+{
+    cout << v1 << " " << ++v2 << endl;
+}
+
+void testFlip()
+{
+    int i = 0, j = 3;
+    f(42, i);
+    flip1(f, j , 42);
+    flip2(f, j, 42);
+    //flip2(g, j, 42);
+}
+
 void chapter_16()
 {
     testCompare();
     testBlob();
     testDebugDelete();
     testSum();
+    testFlip();
 }
