@@ -346,6 +346,10 @@ auto fcn2(It beg, It end)-> typename std::remove_reference<decltype(*beg)>::type
     return *beg;
 }
 
+template <typename T> void f1(T& p) {}
+template <typename T> void f2(const T& p) {}
+template <typename T> void f3(T&&) {}
+
 void testSum()
 {
     sum<int>(1, 2);
@@ -356,6 +360,19 @@ void testSum()
     auto& s = fcn(ca.begin(), ca.end());
 
     auto i2 = fcn2(vi.begin(), vi.end());
+    int n = 0;
+    const int cn = 0;
+    f1(n);
+    f1(cn);
+    //f1(42);
+
+    f2(n);
+    f2(cn);
+    f2(42);
+
+    f3(n);
+    f3(cn);
+    f3(42);
 }
 
 void chapter_16()
