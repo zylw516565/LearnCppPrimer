@@ -20,6 +20,8 @@ using std::unique_ptr;
 
 using std::vector;
 using std::ostream;
+using std::ostringstream;
+
 
 template <typename T>
 int compare(const T& v1, const T& v2)
@@ -387,7 +389,7 @@ void flip1(F f, T1 t1, T2 t2)
 template <typename F, typename T1, typename T2>
 void flip2(F f, T1 &&t1, T2 &&t2)
 {
-    f(t2, t1);
+    f(std::forward<T2>(t2), std::forward<T1>(t1));
 }
 
 void f(int v1, int &v2)
@@ -406,7 +408,34 @@ void testFlip()
     f(42, i);
     flip1(f, j , 42);
     flip2(f, j, 42);
-    //flip2(g, j, 42);
+    flip2(g, j, 42);
+}
+
+template <typename T> string debug_rep(const T& t)
+{
+    ostringstream ret;
+    ret << t;
+    return ret.str();
+}
+
+template <typename T> string debug_rep(T *p)
+{
+    ostringstream ret;
+    ret << "pointer: " << p;
+    if (p)
+        ret << " " << *p;
+    else
+        ret << "null ptr";
+    return ret.str();
+}
+
+void testDebugRep()
+{
+    string s("hi");
+    cout << debug_rep(s) << endl;
+    cout << debug_rep(&s) << endl;
+    const string* sp = &s;
+    cout << debug_rep(sp) << endl;
 }
 
 void chapter_16()
@@ -416,4 +445,5 @@ void chapter_16()
     testDebugDelete();
     testSum();
     testFlip();
+    testDebugRep();
 }
