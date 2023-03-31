@@ -429,6 +429,21 @@ template <typename T> string debug_rep(T *p)
     return ret.str();
 }
 
+string debug_rep(const string& s)
+{
+    return '"' + s + '"';
+}
+
+string debug_rep(const char* s)
+{
+    return debug_rep(string(s));
+}
+
+string debug_rep(char* s)
+{
+    return debug_rep(string(s));
+}
+
 void testDebugRep()
 {
     string s("hi");
@@ -436,6 +451,12 @@ void testDebugRep()
     cout << debug_rep(&s) << endl;
     const string* sp = &s;
     cout << debug_rep(sp) << endl;
+
+    string s2("hello");
+    cout << debug_rep(s2) << endl;
+    cout << debug_rep("hi world!") << endl;
+    char ch[] = "hello";
+    cout << debug_rep(ch) << endl;
 }
 
 void chapter_16()
