@@ -504,19 +504,19 @@ private:
 
     void reallocate()
     {
-        auto size = first_free - elements;
-        auto capSize = cap - elements;
-        auto newElements = alloc.allocate(capSize * 2);
-        auto newbegin = newElements;
-        while (elements <= first_free)
+        auto newcapacity = size()? 2*size(): 1;
+        auto newdata = alloc.allocate(newcapacity);
+        auto dest = newdata;
+        auto elem = elements;
+        for (size_t i = 0; i != size(); ++i)
         {
-            alloc.construct(newbegin++, *elements++);
+            alloc.construct(dest++, std::move(*elem++));
         }
 
         free();
-        elements = newElements;
-        first_free = newElements + size;
-        cap = newElements + capSize;
+        elements = newdata;
+        first_free = dest;
+        cap = elements + newcapacity;
     }
 
 };
