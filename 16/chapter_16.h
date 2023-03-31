@@ -373,6 +373,10 @@ void testSum()
     f3(n);
     f3(cn);
     f3(42);
+
+    f3(std::move(n));   //被推断为: void f3(int&) {}
+    f3(std::move(cn));  //被推断为: void f3(const int&) {}
+    f3(std::move(42));  //被推断为: void f3(int&&) {}
 }
 
 void chapter_16()
