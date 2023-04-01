@@ -459,6 +459,25 @@ void testDebugRep()
     cout << debug_rep(ch) << endl;
 }
 
+template <typename T, typename... Args>
+void foo(const T&, const Args&... rest) {}
+
+template <typename ... Args> void g(Args ... args)
+{
+    cout << "sizeof...(Args) " << sizeof...(Args) << endl;
+    cout << "sizeof...(args) " << sizeof...(args) << endl;
+}
+
+void testVariadicTemplate()
+{
+    int i = 0; double d = 3.14; string s("how");
+    foo(i, s, 42, d);
+    foo(s, 42, "hi");
+    foo(d, s);
+    foo("hi");
+    g(i, s, 42, d);
+}
+
 void chapter_16()
 {
     testCompare();
@@ -467,4 +486,5 @@ void chapter_16()
     testSum();
     testFlip();
     testDebugRep();
+    testVariadicTemplate();
 }
