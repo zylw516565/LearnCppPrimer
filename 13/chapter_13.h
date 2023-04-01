@@ -469,6 +469,14 @@ public:
         alloc.construct(first_free++, std::move(s));
     }
 
+    template <typename ... Args>
+    void emplace_back(Args&& ... args)
+    {
+        chk_n_alloc();
+        alloc.construct(first_free++, std::forward<Args>(args)...);
+        //alloc.construct(first_free++, std::forward(args...));
+    }
+
     std::size_t size() const { return first_free - elements; }
     std::size_t capacity() const { return cap - elements; }
     string* begin()const { return elements; }
@@ -548,6 +556,8 @@ void testStrVec()
 //     v1.push_back("done");
 //     v1.push_back(s);
 //    v1.push_back(s + s2);
+
+    v1.emplace_back(s + s2);
 
     StrVec v3;
     v3 = { "ni", "hao", "a !" };
