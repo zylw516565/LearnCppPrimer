@@ -58,6 +58,12 @@ int compare(const T& v1, const T& v2, F f=F())
     return 0;
 }
 
+template <>
+int compare(const char* const &p1, const char* const& p2)
+{
+    return strcmp(p1, p2);
+}
+
 template <typename A, typename B>
 int flexibleCompare(const A& v1, const B& v2)
 {
@@ -77,6 +83,9 @@ void testCompare()
     cout << "compare<int>(3, 1): " << compare<int>(3, 1) << endl;
 
     cout << "compare(\"hi\", \"mom\"): " << compare("hi", "mom") << endl;
+
+    const char* p1 = "hi", *p2 = "mon";
+    cout << "compare(p1, p2): " << compare(p1, p2) << endl;
 
     long lng;
     //compare(lng, 1024);
