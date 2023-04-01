@@ -491,10 +491,19 @@ ostream& print2(ostream& os, const T& t, const Args&... rest)
     return print2(os, rest...);
 }
 
+template <typename ... Args>
+ostream& errorMsg(ostream& os, const Args&... rest)
+{
+    //print2(os, debug_rep(a1), debug_rep(a2), ...debug_rep(an)
+    return print2(os, debug_rep(rest)...);
+}
+
 void testPrint2()
 {
     int i = 0; double d = 3.14; string s("how");
     print2(cout, i, s, 42);
+
+    errorMsg(std::cerr, "hello", s);
 }
 
 void chapter_16()
