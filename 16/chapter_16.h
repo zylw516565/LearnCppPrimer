@@ -478,6 +478,25 @@ void testVariadicTemplate()
     g(i, s, 42, d);
 }
 
+template <typename T>
+ostream& print2(ostream &os, const T& t)
+{
+    return os << t;
+}
+
+template <typename T, typename ... Args>
+ostream& print2(ostream& os, const T& t, const Args&... rest)
+{
+    os << t << ", ";
+    return print2(os, rest...);
+}
+
+void testPrint2()
+{
+    int i = 0; double d = 3.14; string s("how");
+    print2(cout, i, s, 42);
+}
+
 void chapter_16()
 {
     testCompare();
@@ -487,4 +506,5 @@ void chapter_16()
     testFlip();
     testDebugRep();
     testVariadicTemplate();
+    testPrint2();
 }
