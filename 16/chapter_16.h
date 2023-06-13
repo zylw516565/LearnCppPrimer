@@ -515,6 +515,61 @@ void testPrint2()
     errorMsg(std::cerr, "hello", s);
 }
 
+class TestFoo
+{
+public:
+    void methodA()
+    {
+        cout << "TestFoo::methodA" << endl;
+    }
+
+    void methodInt(int a)
+    {
+        cout << "TestFoo::methodInt " << "a: " << a << endl;
+    }
+
+    void methodString(const string& str)
+    {
+        cout << "TestFoo::methodString " << "str: " << str << endl;
+    }
+
+};
+
+class TestBar
+{
+public:
+    void methodB()
+    {
+        cout << "TestBar::methodB" << endl;
+    }
+
+};
+
+
+void testBindFunction()
+{
+    cout  << endl;
+
+    std::function<void()> funcA;  //无参数,无返回值
+    TestFoo objTestFoo;
+    funcA = std::bind(&TestFoo::methodA, &objTestFoo);
+    funcA();
+
+    TestBar objTestBar;
+    funcA = std::bind(&TestBar::methodB, &objTestBar);
+    funcA();
+
+    funcA = std::bind(&TestFoo::methodInt, &objTestFoo, 42);
+    funcA();
+
+    funcA = std::bind(&TestFoo::methodString, &objTestFoo, "hello");
+    funcA();
+
+    std::function<void(int)> funcB;
+    funcB = std::bind(&TestFoo::methodInt, &objTestFoo, _1);
+    funcB(53);
+}
+
 void chapter_16()
 {
     testCompare();
@@ -525,4 +580,5 @@ void chapter_16()
     testDebugRep();
     testVariadicTemplate();
     testPrint2();
+    testBindFunction();
 }
