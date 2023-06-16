@@ -568,6 +568,22 @@ void testBindFunction()
     std::function<void(int)> funcB;
     funcB = std::bind(&TestFoo::methodInt, &objTestFoo, _1);
     funcB(53);
+
+    const int max_name = 80;
+    char name[max_name];
+
+    char fmt[10];
+    sprintf(fmt, "%%%ds", max_name - 1);
+    //scanf(fmt, name);
+    printf("%s\n", name);
+
+    const char* myname = "Shuo Chen";
+    int age = 29;
+    printf("My name is %1$s, I am %2$d years old.\n", myname, age);
+
+    int x = 8888;
+    cout << std::hex << std::showbase << x << endl;
+    cout << 123 << endl;
 }
 
 void chapter_16()
